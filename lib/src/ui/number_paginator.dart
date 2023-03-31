@@ -29,6 +29,9 @@ class NumberPaginator extends StatefulWidget {
 
   final NumberPaginatorController? controller;
 
+  final Widget? customLeftButton;
+  final Widget? customRightButton;
+
   /// Creates an instance of [NumberPaginator].
   const NumberPaginator({
     Key? key,
@@ -38,6 +41,8 @@ class NumberPaginator extends StatefulWidget {
     this.config = const NumberPaginatorUIConfig(),
     this.contentBuilder,
     this.controller,
+    this.customLeftButton,
+    this.customRightButton,
   })  : assert(initialPage >= 0),
         assert(initialPage <= numberPages - 1),
         super(key: key);
@@ -72,16 +77,50 @@ class NumberPaginatorState extends State<NumberPaginator> {
         child: Row(
           mainAxisAlignment: widget.config.mainAxisAlignment,
           children: [
-            PaginatorIconButton(
-              onPressed: _controller.currentPage > 0 ? _controller.prev : null,
-              icon: Icons.chevron_left,
+            widget.customLeftButton ?? Container(
+              margin: const EdgeInsets.only(
+                right: 5
+              ),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: widget.config.buttonSelectedBackgroundColor ?? Colors.red,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 3.0,
+                  vertical: 2.0,
+                ),
+                child: Icon(
+                  Icons.chevron_left,
+                  color: widget.config.buttonSelectedBackgroundColor ?? Colors.red,
+                  size: 35,
+                ),
+              ),
             ),
             ..._buildCenterContent(),
-            PaginatorIconButton(
-              onPressed: _controller.currentPage < widget.numberPages - 1
-                  ? _controller.next
-                  : null,
-              icon: Icons.chevron_right,
+            widget.customRightButton ?? Container(
+              margin: const EdgeInsets.only(
+                left: 5
+              ),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: widget.config.buttonSelectedBackgroundColor ?? Colors.red,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 3.0,
+                  vertical: 2.0,
+                ),
+                child: Icon(
+                  Icons.chevron_right,
+                  color: widget.config.buttonSelectedBackgroundColor ?? Colors.red,
+                  size: 35,
+                ),
+              ),
             ),
           ],
         ),

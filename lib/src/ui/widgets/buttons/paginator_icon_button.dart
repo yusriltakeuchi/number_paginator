@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:number_paginator/src/ui/widgets/buttons/paginator_button.dart';
 
 /// A paginator button that has an [Icon] as a child, instead of text. The icon
@@ -6,11 +7,13 @@ import 'package:number_paginator/src/ui/widgets/buttons/paginator_button.dart';
 class PaginatorIconButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onPressed;
+  final Color? color;
 
   const PaginatorIconButton({
     Key? key,
     required this.icon,
     this.onPressed,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -18,8 +21,9 @@ class PaginatorIconButton extends StatelessWidget {
     return PaginatorButton(
       onPressed: onPressed,
       // size icon depending on available height
-      child: FittedBox(
-        child: Icon(icon),
+      child: Icon(
+        icon,
+        color: color ?? Colors.grey,
       ),
     );
   }
